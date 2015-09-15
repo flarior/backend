@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-from flask import Flask
-from flask.ext.script import Manager, Server
 import os
 from datetime import datetime
+
+from flask import Flask
+from flask.ext.script import Manager, Server
 
 
 app = Flask(__name__)
@@ -24,7 +25,7 @@ def index():
 
 if __name__ == '__main__':
     current_time = datetime.now()
-    livereload_path = os.path.abspath('../flarior-frontend/app/livereload.txt')
+    livereload_path = os.path.abspath('../frontend/app/livereload.txt')
     with open(livereload_path, 'w+') as livereload:
         livereload.write(str(current_time))
     manager.run()
