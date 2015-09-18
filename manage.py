@@ -5,8 +5,11 @@ from datetime import datetime
 from flask import Flask
 from flask.ext.script import Manager, Server
 
+from flarior import Flarior
+
 
 app = Flask(__name__)
+flarior = Flarior(app)
 manager = Manager(app)
 manager.add_command(
     "runserver",
