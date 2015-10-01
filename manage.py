@@ -4,11 +4,15 @@ from datetime import datetime
 
 from flask import Flask
 from flask.ext.script import Manager, Server
+from flask.ext.security.script import CreateUserCommand
 
 from flarior import Flarior
+from config import configs
 
 
+config_name = os.getenv('FLASK_CONFIG') or 'default'
 app = Flask(__name__)
+app.config.from_object(configs[config_name])
 flarior = Flarior(app)
 manager = Manager(app)
 manager.add_command(
@@ -19,6 +23,14 @@ manager.add_command(
         use_debugger=True
     )
 )
+manager.add_command('create_user', CreateUserCommand)
+
+
+from flarior.models import Role, User, UserRoles
+@manager.command
+def syncdb():
+    for Model in (Role, User, UserRoles):
+        Model.create_table(fail_silently=True)
 
 
 @app.route('/')

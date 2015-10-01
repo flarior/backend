@@ -1,3 +1,6 @@
+flask-collect
 flask-jwt
+flask-peewee
 flask-restplus
 flask-script
+flask-security

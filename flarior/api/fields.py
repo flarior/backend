@@ -7,3 +7,24 @@ task_fields = api.model(
         'id': fields.String,
     }
 )
+
+auth_fields = api.model(
+    'Auth', {
+        'email': fields.String(
+            description='The email',
+            required=True,
+            default='admin@example.com'
+        ),
+        'password': fields.String(
+            description='The password',
+            required=True,
+            default='Sekrit'
+        ),
+    }
+)
+
+token_response = api.model(
+    'Token', {
+        'token': fields.String,
+    }
+)
