@@ -1,3 +1,6 @@
+from datetime import timedelta
+
+
 class Config:
     DEBUG = False
     SECRET_KEY = 'iQfPvB6sZaNHqVFI5CJa9rM1xOEVHKIM0LwifT04yLsPlZhSSvaDuZXOgJFSpJVq'
@@ -5,6 +8,7 @@ class Config:
     SECURITY_PASSWORD_SALT = 'gW2ZmkEc5cIc2Uhn'
     SECURITY_TRACKABLE = False
     SECURITY_SEND_REGISTER_EMAIL = False
+    JWT_EXPIRATION_DELTA = timedelta(days=7)
     DATABASE = {
         'name': 'database.db',
         'engine': 'peewee.SqliteDatabase',
