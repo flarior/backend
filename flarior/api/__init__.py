@@ -36,4 +36,5 @@ def swagger_ui():
         specs_url=api.specs_url
     )
 
-from . import tasks
+import auth
+import tasks
