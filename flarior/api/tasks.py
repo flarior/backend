@@ -2,10 +2,11 @@ from .namespaces import ns_tasks
 from . import api
 from .fields import task_fields, get_task_fields
 from resources import ProtectedResource
-from taskw import TaskWarrior
+from taskw import TaskWarriorShellout as TaskWarrior
 
 parser = api.parser()
 parser.add_argument('description', type=str, required=True, location='json')
+
 
 @ns_tasks.route('', endpoint='api/tasks')
 class TaskListAPI(ProtectedResource):
