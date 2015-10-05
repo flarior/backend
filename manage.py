@@ -42,7 +42,7 @@ def index():
 if __name__ == '__main__':
     current_time = datetime.now()
     livereload_path = os.path.abspath(
-        PROJECT_APP_PATH + '../frontend/app/livereload.txt'
+        PROJECT_APP_PATH + '/../frontend/app/livereload.txt'
     )
     with open(livereload_path, 'w+') as livereload:
         livereload.write(str(current_time))
