@@ -7,7 +7,7 @@ from flask.ext.script import Manager, Server
 from flask.ext.security.script import CreateUserCommand
 
 from flarior import Flarior
-from config import configs
+from config import configs, PROJECT_APP_PATH
 
 
 config_name = os.getenv('FLASK_CONFIG') or 'default'
@@ -25,8 +25,9 @@ manager.add_command(
 )
 manager.add_command('create_user', CreateUserCommand)
 
-
 from flarior.models import Role, User, UserRoles
+
+
 @manager.command
 def syncdb():
     for Model in (Role, User, UserRoles):
@@ -40,7 +41,9 @@ def index():
 
 if __name__ == '__main__':
     current_time = datetime.now()
-    livereload_path = os.path.abspath('../frontend/app/livereload.txt')
+    livereload_path = os.path.abspath(
+        PROJECT_APP_PATH + '../frontend/app/livereload.txt'
+    )
     with open(livereload_path, 'w+') as livereload:
         livereload.write(str(current_time))
     manager.run()

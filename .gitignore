@@ -2,3 +2,4 @@
 .ropeproject/
 .vagrant/
 *.db
+local_config.py

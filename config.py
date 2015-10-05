@@ -1,4 +1,8 @@
 from datetime import timedelta
+import os
+
+
+PROJECT_APP_PATH = os.path.dirname(os.path.abspath(__file__))
 
 
 class Config:
@@ -19,6 +23,11 @@ class Config:
         pass
 
 
+f = os.path.join(PROJECT_APP_PATH, "local_config.py")
+if os.path.exists(f):
+    exec(open(f, "rb").read())
+
+
 class DevConfig(Config):
     DEBUG = True
 
@@ -27,9 +36,13 @@ class TestConfig(Config):
     TESTING = True
 
 
+class ProdConfig(Config):
+    pass
+
+
 configs = {
     'dev': DevConfig,
     'testing': TestConfig,
-    'prod': Config,
+    'prod': ProdConfig,
     'default': Config
 }
