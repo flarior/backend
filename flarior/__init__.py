@@ -1,6 +1,7 @@
 from flask.ext.restplus import apidoc
 from flask.ext.security import Security, PeeweeUserDatastore
 from flask.ext.security.utils import verify_password
+from flask.ext.cors import CORS
 from flask_jwt import JWT
 from flask_peewee.db import Database
 
@@ -17,6 +18,7 @@ class Flarior(object):
     db = None
     security = Security()
     user_datastore = None
+    cors = CORS()
 
     def __init__(self, app=None):
         global current_app
@@ -28,6 +30,7 @@ class Flarior(object):
     def init_app(self, app):
         from api import api_v0
         self.app = app
+        self.cors.init_app(api_v0)
         self.app.register_blueprint(api_v0, url_prefix='/api/v0')
         self.app.register_blueprint(apidoc.apidoc)
 

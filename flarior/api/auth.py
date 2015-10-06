@@ -19,7 +19,7 @@ def generate_token(user):
     return token
 
 
-@ns_auth.route('/token', endpoint='auth/token')
+@ns_auth.route('', endpoint='auth/token')
 @api.doc(body=auth_fields)
 class AuthAPI(JWTAuthView, Resource):
     @api.response(400, 'Invalid credentials')
