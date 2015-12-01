@@ -1,9 +1,7 @@
-from flask.ext.restplus import apidoc
-from flask.ext.security import Security, PeeweeUserDatastore
-from flask.ext.security.utils import verify_password
-from flask.ext.cors import CORS
+from flask import Blueprint
+from flask_restplus import apidoc
+from flask_cors import CORS
 from flask_jwt import JWT
-from flask_peewee.db import Database
 
 
 current_app = None
@@ -14,10 +12,9 @@ class Flarior(object):
     Flarior app
     """
 
+    api = None
+    blueprint = None
     jwt = JWT()
-    db = None
-    security = Security()
-    user_datastore = None
     cors = CORS()
 
     def __init__(self, app=None):
@@ -28,38 +25,26 @@ class Flarior(object):
             self.init_app(app)
 
     def init_app(self, app):
-        from api import api_v0
         self.app = app
-        self.cors.init_app(api_v0)
-        self.app.register_blueprint(api_v0, url_prefix='/api/v0')
-        self.app.register_blueprint(apidoc.apidoc)
-
-        self.db = Database(self.app)
-        from models import Role, User, UserRoles
-        self.user_datastore = PeeweeUserDatastore(
-            self.db,
-            User,
-            Role,
-            UserRoles
-        )
-        self.security.init_app(self.app, self.user_datastore)
         self.jwt.init_app(app)
+        self.blueprint = Blueprint(
+            'onelove',
+            __name__,
+            template_folder='templates',
+            static_folder='static',
+            static_url_path='/static/onelove',
+        )
+        self.app.register_blueprint(self.blueprint)
+
+        from api import api_v0, api
+        self.api = api
+        self.app.register_blueprint(api_v0)
+        self.app.register_blueprint(apidoc.apidoc)
 
     @jwt.authentication_handler
     def authenticate(username, password):
-        from models import User
-        try:
-            user = User.get(email=username)
-        except User.DoesNotExist:
-            return None
-        if verify_password(password, user.password):
-            return user
-
-    @jwt.user_handler
-    def load_user(payload):
-        from models import User
-        try:
-            user = User.get(id=payload['user_id'])
-        except User.DoesNotExist:
-            return None
-        return user
+        result = {
+            'id': 'cvrc',
+            'email': 'some@example.com',
+        }
+        return result

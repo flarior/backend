@@ -1,9 +1,7 @@
 flask-collect
 flask-cors
 flask-jwt
-flask-peewee
 flask-restplus
 flask-script
 flask-security
-psycopg2
 taskw
